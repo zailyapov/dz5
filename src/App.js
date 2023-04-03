@@ -1,38 +1,47 @@
-import { useState } from "react"
-import {set, useForm} from "react-hook-form"
+import React, { useState } from "react";
 
-const App = () => {
-  const [email, setEmail] = useState ('')
-  const [password, setPassword] = useState ('')
-  const [emailDirty, setEmailDirty] = useState (false )
-  const [passwordDirty, setPasswordDirty] = useState (false)
-  const [emailError, setEmailError] = useState ('Email не может быть пустым')
-  const [passwordError, setPasswordError] = useState ('Пароль не может быть пустым')
+function RegistrationForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
-  const blurHandler = (e) =>{
-    switch(e.target.name){
-      case 'email':
-        setEmailDirty(true);
-        break
-      case 'password':
-        setPasswordDirty(true); 
-        break 
-    }
-  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Данные:", { username, password, email });
+  };
 
-
-  return(
-    <div className="app">
-      <form>
-        <h1>Регистрация</h1>
-        {(emailDirty && emailError) && <div style={{color: 'red'}}>{emailError}</div>}
-        <input onBlur={e => blurHandler(e)} name="email" type='text' placeholder="Введите свой email"></input>
-        {(passwordDirty && passwordError) && <div style={{color: 'red'}}>{passwordError}</div>}
-        <input onBlur={e => blurHandler(e)} name="password" type='text' placeholder="Придумайте пароль"></input>
-        <button type="submit">Регистрация</button>
-      </form>
-    </div>
-  )
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="username">Имя пользователя:</label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Пароль:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </div>
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+  );
 }
 
-export default App
+export default RegistrationForm;
